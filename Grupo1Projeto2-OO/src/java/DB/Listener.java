@@ -18,7 +18,8 @@ import javax.servlet.ServletContextListener;
  * @author angelo
  */
 public class Listener implements ServletContextListener {
-    public static final String URL = "jdbc:sqlite:C:\\Users\\User\\Desktop";
+    //CRIA O BANCO DE DADOS NA PASTA INDICADA
+    public static final String URL = "jdbc:sqlite:D:\\FATEC - ADS\\POO\\Projeto 3\\quiz.db";
     public static String exceptionMessage = null;
     
     @Override
@@ -106,6 +107,14 @@ public class Listener implements ServletContextListener {
                 stmt.executeUpdate(SQL);
  
             }
+            
+            //TABELA QUIZ PARA ARMAZENAR O RESULTADO DOS QUIZES RESPONDIDOS
+            step = "quiz table creation";
+            
+            SQL = "CREATE IF NOT EXISTS TABLE quiz("
+                    +"result INTEGER NOT NULL)";
+            stmt.executeUpdate(SQL);
+            
         }catch (Exception ex){
             exceptionMessage = step + ": " + ex;
         }
