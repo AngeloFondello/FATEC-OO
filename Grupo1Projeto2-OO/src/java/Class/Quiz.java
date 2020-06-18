@@ -31,7 +31,7 @@ public class Quiz {
         Class.forName("org.sqlite.JDBC");
         Connection on = DriverManager.getConnection(Listener.URL);
         Statement stmt = on.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM categories ORDER BY name");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM questions");
         while(rs.next()){
             list.add(new Quiz(
                     rs.getString("description"), 

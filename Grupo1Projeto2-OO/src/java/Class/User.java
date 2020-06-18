@@ -51,8 +51,8 @@ public class User {
         ResultSet rs = stmt.executeQuery();
         if(rs.next()){
             user = new User(
-                    rs.getString("login"), 
-                    rs.getString("name"));
+                    rs.getString("name"), 
+                    rs.getString("login"));
         }else{
             
         }
@@ -60,6 +60,28 @@ public class User {
         stmt.close();
         on.close();
         return user;
+    }
+    //METODO PARA CRIAR SESSAO DO USUARIO
+    public static User login(String login, String password) throws Exception {
+        User output = null;
+        Connection con = DriverManager.getConnection(Listener.URL);
+        String SQL = "SELECT * FROM users WHERE login=? AND password_hash=?";
+        PreparedStatement stmt = con.prepareStatement(SQL);
+        stmt.setString(1, login);
+        stmt.setLong(2, password.hashCode());
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next()){
+            output = new User(
+                    rs.getString("name"), 
+                    rs.getString("login")
+            );
+        }else{
+            output = null;
+        }
+        rs.close();
+        stmt.close();
+        con.close();
+        return output;
     }
     
     //CRIANDO METODO PARA CRIAR USUARIOS
