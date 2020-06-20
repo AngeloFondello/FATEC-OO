@@ -88,7 +88,7 @@ public class User {
     public static void addUser(String login, String name,String password) throws Exception{
         Class.forName("org.sqlite.JDBC");
         Connection on = DriverManager.getConnection(Listener.URL);
-        String SQL = "INSERT INTO users(login, name, password_hash) VALUES(?,?,?,?)";
+        String SQL = "INSERT INTO users(login, name, password_hash) VALUES(?,?,?)";
         PreparedStatement stmt = on.prepareStatement(SQL);
         stmt.setString(1, login);
         stmt.setString(2, name);
@@ -97,6 +97,34 @@ public class User {
         stmt.close();
         on.close();
     }
+    
+    //VERIFICAR SE LOGIN JÁ EXISTE
+    public static boolean verifyUser(String login) throws Exception
+    {   
+        String output = null;
+        Connection con = DriverManager.getConnection(Listener.URL);
+        String SQL = "SELECT * FROM users WHERE login=?";
+        PreparedStatement stmt = con.prepareStatement(SQL);
+        stmt.setString(1, login);
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next()){
+            output = rs.getString("login");
+        }else{
+            output = null;
+        }
+        
+        rs.close();
+        stmt.close();
+        con.close();
+        
+        if(output != null){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
 
     public User(String login, String name) {
         this.login = login;

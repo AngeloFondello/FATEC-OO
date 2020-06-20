@@ -47,6 +47,7 @@
             <label>Senha</label>
             <input type="password" name="user.password">
             <input type="submit" name="session.login" value="Entrar">
+            <a href="sign.jsp">Criar conta</a>
         </form>
         <%=errorMsg%>
         <%if(Listener.exceptionMessage != null){%>
