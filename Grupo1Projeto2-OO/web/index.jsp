@@ -31,6 +31,7 @@
     </head>
     <body>
         <h1>Hello <%=session.getAttribute("user.login")%>!</h1>
+        <a href="quiz.jsp">Realizar quiz</a>
         <form>
             <input type="submit" name="session.logout" value="Sair">
         </form>
