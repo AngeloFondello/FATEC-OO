@@ -53,7 +53,7 @@ public class Historic {
         Class.forName("org.sqlite.JDBC");
         Connection con = DriverManager.getConnection(Listener.URL);
         Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM quiz WHERE fk_login_user = ? ORDER BY result LIMIT 10");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM quiz WHERE ORDER BY result LIMIT 10");
         while(rs.next()){
             list.add(
                     new Historic(
@@ -74,7 +74,7 @@ public class Historic {
         Class.forName("org.sqlite.JDBC");
         Connection con = DriverManager.getConnection(Listener.URL);
         Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM quiz WHERE fk_login_user = ? ORDER BY rowid LIMIT 10");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM quiz ORDER BY random() LIMIT 10");
         while(rs.next()){
             list.add(
                     new Historic(

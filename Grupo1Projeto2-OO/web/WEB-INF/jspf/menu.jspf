@@ -1,0 +1,62 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="Class.User"%>
+<%@ page pageEncoding="UTF-8" %>
+<%
+    String errorMsg = "";
+    
+        //verifico se o botao de login foi acionado
+        if(request.getParameter("session.login") != null){
+            //pegar os dados do form de login e criar objeto user
+            String login = request.getParameter("user.login");
+            String pass = request.getParameter("user.password");
+            try{
+                 User user = User.login(login, pass);
+
+                if(user == null){
+                    errorMsg += "Login ou senha incorretos";
+                }
+                else{
+                    //realizar login e ir para a página incial
+                    session.setAttribute("user.login", login);
+                    session.setAttribute("user.pass", pass);
+                    response.sendRedirect(request.getRequestURI());
+                }
+            }catch(Exception e){
+                errorMsg += e.getMessage();
+            }
+        }
+        else if(request.getParameter("session.logout") != null){
+            session.removeAttribute("user.login");
+            session.removeAttribute("user.pass");
+            response.sendRedirect(request.getRequestURI());
+        }
+%>
+
+<h1>Quiz x Quiz</h1>
+
+<%
+    //verifico se já tem uma sessão
+    if(session.getAttribute("user.login") == null){//se nao tive exibe form de login
+        %>
+            <form action="#" method="post">
+                <label>Login</label>
+                <input type="text" name="user.login">
+                <label>Senha</label>
+                <input type="password" name="user.password">
+                <input type="submit" name="session.login" value="Entrar">
+                <a href="sign.jsp">Criar conta</a>
+        </form>
+        <%=errorMsg%> 
+        <%
+    }
+    else{//exibe um menu de acoes para o usuario
+        %>
+        <h1>Hello <%=session.getAttribute("user.login")%>!</h1>
+        <a href="quiz.jsp">Realizar quiz</a>
+        <form>
+            <input type="submit" name="session.logout" value="Sair">
+        </form>
+        <%
+    }
+    
+    %>
