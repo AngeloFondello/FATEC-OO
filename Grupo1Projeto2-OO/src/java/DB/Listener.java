@@ -112,7 +112,7 @@ public class Listener implements ServletContextListener {
             step = "quiz table creation";
             
             SQL = "CREATE TABLE IF NOT EXISTS quiz("
-                    +"result INTEGER NOT NULL,"
+                    +"result REAL NOT NULL,"
                     + "fk_login_user VARCHAR(50) NOT NULL,"
                     + "FOREIGN KEY (fk_fk_login_usuario) REFERENCES users(login))";
             stmt.executeUpdate(SQL);

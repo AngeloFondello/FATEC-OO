@@ -5,6 +5,11 @@
  */
 package Class;
 
+import DB.Listener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -16,12 +21,12 @@ import java.util.Date;
 public class Historic {
     private String user;
     private double result;
-    private Date date;
+    //private Date date;
 
-    public Historic(String user, double result, Date date) {
+    public Historic(String user, double result) {
         this.user = user;
         this.result = result;
-        this.date = date;
+        //this.date = date;
     }
     
     public String getUser() {
@@ -40,39 +45,48 @@ public class Historic {
         this.result = result;
     }
 
-    public Date getDate() {
-        return date;
-    }
 
-    public void setDate(Date date) {
-        this.date = date;
+    
+    //ORDENA AS MELHORES NOTA
+    public static ArrayList<Historic> getBestResults() throws Exception{
+        ArrayList<Historic> list = new ArrayList<>();
+        Class.forName("org.sqlite.JDBC");
+        Connection con = DriverManager.getConnection(Listener.URL);
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM quiz WHERE fk_login_user = ? ORDER BY result LIMIT 10");
+        while(rs.next()){
+            list.add(
+                    new Historic(
+                            rs.getString("login"), 
+                            rs.getDouble("result")
+                    )
+            );
+        }
+        rs.close();
+        stmt.close();
+        con.close();
+        return list;
     }
     
-    
-    //ORDENANDO POR NOTA
-    public static ArrayList<Historic> sortByResult(ArrayList<Historic> historics) {
-        Collections.sort(historics, (Historic h1, Historic h2) -> {
-            if (h1.getResult() > h2.getResult()) {
-                return -1;
-            } else if(h1.getResult() == h2.getResult()){
-                return 0;
-            } else {
-                return 1;
-            }
-        });
-        return historics;
-    }
-    
-    //ORDENANDO POR DATA
-    public static ArrayList<Historic> sortByDate(ArrayList<Historic> historics) {
-        Collections.sort(historics, (Historic h1, Historic h2) -> {
-            if (h1.getDate().after(h2.getDate())) {
-                return -1;
-            } else {
-                return 1;
-            }
-        });    
-        return historics;
+    //ORDENA OS AS ULTIMAS NOTAS
+    public static ArrayList<Historic> getLastQuiz() throws Exception{
+        ArrayList<Historic> list = new ArrayList<>();
+        Class.forName("org.sqlite.JDBC");
+        Connection con = DriverManager.getConnection(Listener.URL);
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM quiz WHERE fk_login_user = ? ORDER BY rowid LIMIT 10");
+        while(rs.next()){
+            list.add(
+                    new Historic(
+                            rs.getString("login"), 
+                            rs.getDouble("result")
+                    )
+            );
+        }
+        rs.close();
+        stmt.close();
+        con.close();
+        return list;
     }
     
 }
