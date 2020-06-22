@@ -31,7 +31,7 @@ public class Quiz {
         Class.forName("org.sqlite.JDBC");
         Connection on = DriverManager.getConnection(Listener.URL);
         Statement stmt = on.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM questions ORDER BY random()");
+        ResultSet rs = stmt.executeQuery("SELECT * FROM questions ORDER BY random() LIMIT 10");
         while(rs.next()){
             list.add(new Quiz(
                     rs.getString("description"), 

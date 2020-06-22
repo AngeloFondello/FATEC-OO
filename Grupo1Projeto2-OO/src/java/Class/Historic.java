@@ -8,6 +8,7 @@ package Class;
 import DB.Listener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -19,23 +20,16 @@ import java.util.Date;
  * @author angelo
  */
 public class Historic {
-    private String user;
     private double result;
+    private String user;
     //private Date date;
 
-    public Historic(String user, double result) {
-        this.user = user;
+    public Historic(double result, String user) {
         this.result = result;
+        this.user = user;
         //this.date = date;
     }
     
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
 
     public double getResult() {
         return result;
@@ -44,21 +38,38 @@ public class Historic {
     public void setResult(double result) {
         this.result = result;
     }
+    public String getUser() {
+        return user;
+    }
 
+    public void setUser(String user) {
+        this.user = user;
+    }
 
     
     //ORDENA AS MELHORES NOTA
-    public static ArrayList<Historic> getBestResults() throws Exception{
+    public static ArrayList<Historic> getBestResults(String login) throws Exception{
         ArrayList<Historic> list = new ArrayList<>();
         Class.forName("org.sqlite.JDBC");
         Connection con = DriverManager.getConnection(Listener.URL);
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM quiz WHERE ORDER BY result LIMIT 10");
+        String SQL;
+        if(!login.equals("")){
+            SQL = "SELECT * FROM quiz WHERE fk_login_user = ? ORDER BY result LIMIT 10";
+        }
+        else{
+            SQL = "SELECT * FROM quiz ORDER BY result LIMIT 10";
+        }
+        PreparedStatement stmt = con.prepareStatement(SQL);
+        if(!login.equals("")){
+            stmt.setString(1, login);
+        }
+        
+        ResultSet rs = stmt.executeQuery();
         while(rs.next()){
             list.add(
                     new Historic(
-                            rs.getString("login"), 
-                            rs.getDouble("result")
+                            rs.getDouble("result"),
+                            rs.getString("fk_login_user")
                     )
             );
         }
@@ -68,18 +79,28 @@ public class Historic {
         return list;
     }
     
-    //ORDENA OS AS ULTIMAS NOTAS
-    public static ArrayList<Historic> getLastQuiz() throws Exception{
+    //ORDENA OS ULTIMOS TESTE
+    public static ArrayList<Historic> getLastQuiz(String login) throws Exception{
         ArrayList<Historic> list = new ArrayList<>();
         Class.forName("org.sqlite.JDBC");
         Connection con = DriverManager.getConnection(Listener.URL);
-        Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery("SELECT * FROM quiz ORDER BY random() LIMIT 10");
+        String SQL;
+        if(!login.equals("")){
+            SQL = "SELECT * FROM quiz WHERE fk_login_user = ? ORDER BY rowid DESC LIMIT 10";
+        }
+        else{
+            SQL = "SELECT * FROM quiz ORDER BY rowid DESC LIMIT 10";
+        }
+        PreparedStatement stmt = con.prepareStatement(SQL);
+        if(!login.equals("")){
+            stmt.setString(1, login);
+        }
+        ResultSet rs = stmt.executeQuery();
         while(rs.next()){
             list.add(
                     new Historic(
-                            rs.getString("login"), 
-                            rs.getDouble("result")
+                            rs.getDouble("result"),
+                            rs.getString("fk_login_user")
                     )
             );
         }

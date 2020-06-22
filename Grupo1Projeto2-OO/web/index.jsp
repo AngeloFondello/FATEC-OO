@@ -4,6 +4,8 @@
     Author     : Daniel
 --%>
 
+<%@page import="java.util.ArrayList"%>
+<%@page import="Class.Historic"%>
 <%@page import="DB.Listener"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,7 +19,7 @@
         <%if(Listener.exceptionMessage != null){%>
             <h3 style="color:red"><%= Listener.exceptionMessage %></h3>
         <%}%>
-        <!--tabela com select order by rowdid(ultimos testes) e select order by result(melhores notas) -->
+        
         
     </body>
 </html>
