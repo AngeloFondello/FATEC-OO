@@ -4,8 +4,6 @@
     Author     : Daniel
 --%>
 
-<%@page import="java.util.ArrayList"%>
-<%@page import="Class.Historic"%>
 <%@page import="DB.Listener"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -20,6 +18,7 @@
             <h3 style="color:red"><%= Listener.exceptionMessage %></h3>
         <%}%>
         
+        <%@include file="WEB-INF/jspf/tables.jspf" %>
         
     </body>
 </html>

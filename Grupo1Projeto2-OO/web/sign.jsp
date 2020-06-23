@@ -58,7 +58,7 @@
             <label>Confirme a senha:</label>
             <input type="password" name="user.re-password"><br><br>
             <input type="submit" name="sign" value="Registrar-se">
-            <a href="login.jsp">Voltar</a>
+            <a href="index.jsp">Voltar</a>
         </form>
         <%=errorMsg%>
         <%if(Listener.exceptionMessage != null){%>

@@ -1,0 +1,131 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<%@page import="java.util.ArrayList"%>
+<%@page import="Class.Historic"%>
+<%
+    String login = "";
+    if (session.getAttribute("user.login") != null) {
+        login = session.getAttribute("user.login").toString();
+        //ultimos quizes do usuario
+        ArrayList<Historic> lastQuizes = new Historic(0, "").getLastQuiz(login);
+
+        %>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        Meus ultimos resultados
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Login
+                    </th>
+                    <th>
+                        Nota
+                    </th>
+                </tr>
+            </thead>
+            <%
+            if(lastQuizes.size() > 0){
+                
+                for (Historic result : lastQuizes) {%>
+                    <tr>
+                        <td><%=result.getResult()%></td>    
+                        <td><%=result.getUser()%></td>
+                    </tr>
+            <%
+                }
+            }else{
+                %>
+                <tr>
+                    <td colspan="2">Você ainda não respondeu o quiz. <a href="quiz.jsp">Responder quiz!</a></td>
+                </tr>
+                        <%
+            }
+            %>
+        </table>
+        
+        <%  
+    }
+    
+    
+    //ultimos quizes
+    ArrayList<Historic> lastQuizes = new Historic(0, "").getLastQuiz(login);
+
+        %>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        Ultimos resultados
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Login
+                    </th>
+                    <th>
+                        Nota
+                    </th>
+                </tr>
+            </thead>
+            <%
+            if(lastQuizes.size() > 0){
+                
+                for (Historic result : lastQuizes) {%>
+                    <tr>
+                        <td><%=result.getResult()%></td>    
+                        <td><%=result.getUser()%></td>
+                    </tr>
+            <%
+                }
+            }else{
+                %>
+                <tr>
+                    <td colspan="2">Ninguém respondeu o quiz. Seja o primeiro!</td>
+                </tr>
+                        <%
+            }
+            %>
+        </table>
+        <%
+        //melhores notas quizes
+        ArrayList<Historic> bestResults = new Historic(0, "").getBestResults();
+
+        %>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        10 Melhores Notas
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Login
+                    </th>
+                    <th>
+                        Nota
+                    </th>
+                </tr>
+            </thead>
+            <%
+            if(bestResults.size() > 0){
+                
+                for (Historic result : bestResults) {%>
+                    <tr>
+                        <td><%=result.getResult()%></td>    
+                        <td><%=result.getUser()%></td>
+                    </tr>
+            <%
+                }
+            }else{
+                %>
+                <tr>
+                    <td colspan="2">Ninguém respondeu o quiz. Seja o primeiro!</td>
+                </tr>
+                        <%
+            }
+            %>
+        </table>

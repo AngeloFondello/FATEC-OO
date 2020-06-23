@@ -48,22 +48,13 @@ public class Historic {
 
     
     //ORDENA AS MELHORES NOTA
-    public static ArrayList<Historic> getBestResults(String login) throws Exception{
+    public static ArrayList<Historic> getBestResults() throws Exception{
         ArrayList<Historic> list = new ArrayList<>();
         Class.forName("org.sqlite.JDBC");
         Connection con = DriverManager.getConnection(Listener.URL);
         String SQL;
-        if(!login.equals("")){
-            SQL = "SELECT * FROM quiz WHERE fk_login_user = ? ORDER BY result LIMIT 10";
-        }
-        else{
-            SQL = "SELECT * FROM quiz ORDER BY result LIMIT 10";
-        }
+        SQL = "SELECT * FROM quiz ORDER BY result LIMIT 10";
         PreparedStatement stmt = con.prepareStatement(SQL);
-        if(!login.equals("")){
-            stmt.setString(1, login);
-        }
-        
         ResultSet rs = stmt.executeQuery();
         while(rs.next()){
             list.add(
