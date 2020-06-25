@@ -8,7 +8,9 @@ package Class;
 import DB.Listener;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -24,6 +26,26 @@ public class Quiz {
    private String answerwrong2;
    private String answerwrong3;
 
+   
+   //METODO PARA VERIFICAR SE A RESPOSTA ESTA CORRETA
+   
+   public boolean verifyAnswer() throws SQLException{
+       
+        Connection con = DriverManager.getConnection(Listener.URL);
+        String SQL = "SELECT * FROM questions WHERE answer=? and description = ?";
+        PreparedStatement stmt = con.prepareStatement(SQL);
+        stmt.setString(1, this.answer);
+        stmt.setString(2, this.description);
+        ResultSet rs = stmt.executeQuery();
+        
+        if(rs.next()){
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+   }
    
    //CRIANDO METODO PARA PEGAR QEUSTÔES
    public static ArrayList<Quiz> getQuiz() throws Exception{

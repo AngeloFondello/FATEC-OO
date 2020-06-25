@@ -31,8 +31,8 @@
                 
                 for (Historic result : lastQuizes) {%>
                     <tr>
-                        <td><%=result.getResult()%></td>    
                         <td><%=result.getUser()%></td>
+                        <td><%=result.getResult()%></td>    
                     </tr>
             <%
                 }
@@ -75,8 +75,8 @@
                 
                 for (Historic result : lastQuizes) {%>
                     <tr>
-                        <td><%=result.getResult()%></td>    
                         <td><%=result.getUser()%></td>
+                        <td><%=result.getResult()%></td>    
                     </tr>
             <%
                 }
@@ -115,8 +115,9 @@
                 
                 for (Historic result : bestResults) {%>
                     <tr>
-                        <td><%=result.getResult()%></td>    
                         <td><%=result.getUser()%></td>
+                        <td><%=result.getResult()%></td>    
+                        
                     </tr>
             <%
                 }

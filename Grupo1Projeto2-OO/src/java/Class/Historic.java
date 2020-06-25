@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,7 +47,16 @@ public class Historic {
         this.user = user;
     }
 
-    
+    public void addResult() throws SQLException{
+        Connection con = DriverManager.getConnection(Listener.URL);
+        String SQL = "INSERT INTO quiz(result, fk_login_user) VALUES (?, ?)";
+        PreparedStatement stmt = con.prepareStatement(SQL);
+        stmt.setDouble(1, this.result);
+        stmt.setString(2, this.user);
+        stmt.execute();
+        stmt.close();
+        con.close();
+    }
     //ORDENA AS MELHORES NOTA
     public static ArrayList<Historic> getBestResults() throws Exception{
         ArrayList<Historic> list = new ArrayList<>();
