@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -84,6 +85,8 @@ public class User {
         return output;
     }
     
+    
+    
     //CRIANDO METODO PARA CRIAR USUARIOS
     public static void addUser(String login, String name,String password) throws Exception{
         Class.forName("org.sqlite.JDBC");
@@ -125,7 +128,25 @@ public class User {
         }
     }
     
-
+    public double getAverage() throws SQLException{
+        double avg = 0;
+        String output = null;
+        Connection con = DriverManager.getConnection(Listener.URL);
+        String SQL = "SELECT avg(result) as avg FROM quiz WHERE fk_login_user = ?";
+        PreparedStatement stmt = con.prepareStatement(SQL);
+        stmt.setString(1, this.login);
+        ResultSet rs = stmt.executeQuery();
+        if(rs.next()){
+            avg = rs.getDouble("avg");
+        }
+        
+        rs.close();
+        stmt.close();
+        con.close();
+        
+        return avg;
+    }
+    
     public User(String login, String name) {
         this.login = login;
         this.name = name;

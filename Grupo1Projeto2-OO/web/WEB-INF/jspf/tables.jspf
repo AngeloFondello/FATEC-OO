@@ -51,7 +51,7 @@
     
     
     //ultimos quizes
-    ArrayList<Historic> lastQuizes = new Historic(0, "").getLastQuiz(login);
+    ArrayList<Historic> lastQuizes = new Historic(0, "").getLastQuiz("");
 
         %>
         <table border="1">
