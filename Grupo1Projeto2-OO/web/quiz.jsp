@@ -10,7 +10,7 @@
 <%@page import="Class.Quiz"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    
+    request.setCharacterEncoding("UTF-8");
             
     if(session.getAttribute("user.login") == null){
         response.sendRedirect("index.jsp");
@@ -51,7 +51,7 @@
         
         Historic result = new Historic(nota, session.getAttribute("user.login").toString());
         result.addResult();
-        session.setAttribute("last.nota", quiz.verifyAnswer());
+        session.setAttribute("last.nota", nota);
         
         
     }
@@ -61,9 +61,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Quiz <%=
-            session.getAttribute("last.nota")
-        %></title>
+        <title>Quiz</title>
     </head>
     <body>
         <a href="index.jsp">Voltar</a>

@@ -32,19 +32,20 @@ public class Quiz {
    public boolean verifyAnswer() throws SQLException{
        
         Connection con = DriverManager.getConnection(Listener.URL);
-        String SQL = "SELECT * FROM questions WHERE answer=? and description = ?";
+        String SQL = "SELECT * FROM questions WHERE answer = ? and description = ?";
         PreparedStatement stmt = con.prepareStatement(SQL);
         stmt.setString(1, this.answer);
         stmt.setString(2, this.description);
         ResultSet rs = stmt.executeQuery();
-        
+        boolean vef = false;
         if(rs.next()){
-            return true;
+            vef = true;
         }
-        else{
-            return false;
-        }
+        stmt.close();
+        rs.close();
+        con.close();
         
+        return vef;
    }
    
    //CRIANDO METODO PARA PEGAR QEUSTÔES

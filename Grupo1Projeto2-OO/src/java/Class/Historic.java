@@ -63,7 +63,7 @@ public class Historic {
         Class.forName("org.sqlite.JDBC");
         Connection con = DriverManager.getConnection(Listener.URL);
         String SQL;
-        SQL = "SELECT * FROM quiz ORDER BY result LIMIT 10";
+        SQL = "SELECT * FROM quiz ORDER BY result DESC LIMIT 10";
         PreparedStatement stmt = con.prepareStatement(SQL);
         ResultSet rs = stmt.executeQuery();
         while(rs.next()){
