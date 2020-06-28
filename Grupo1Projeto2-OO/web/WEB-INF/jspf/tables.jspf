@@ -3,6 +3,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="Class.Historic"%>
 <%
+    request.setCharacterEncoding("UTF-8");
     String login = "";
     if (session.getAttribute("user.login") != null) {
         login = session.getAttribute("user.login").toString();

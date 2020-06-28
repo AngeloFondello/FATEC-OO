@@ -12,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -73,8 +74,9 @@ public class User {
         ResultSet rs = stmt.executeQuery();
         if(rs.next()){
             output = new User(
-                    rs.getString("name"), 
-                    rs.getString("login")
+                    rs.getString("login"), 
+                    rs.getString("name")
+                    
             );
         }else{
             output = null;
@@ -130,20 +132,19 @@ public class User {
     
     public double getAverage() throws SQLException{
         double avg = 0;
-        String output = null;
         Connection con = DriverManager.getConnection(Listener.URL);
         String SQL = "SELECT avg(result) as avg FROM quiz WHERE fk_login_user = ?";
         PreparedStatement stmt = con.prepareStatement(SQL);
         stmt.setString(1, this.login);
         ResultSet rs = stmt.executeQuery();
         if(rs.next()){
-            avg = rs.getDouble("avg");
+            avg = rs.getDouble(1);
         }
-        
+        DecimalFormat df = new DecimalFormat("#,0");
+        avg = Double.parseDouble(df.format(avg));
         rs.close();
         stmt.close();
         con.close();
-        
         return avg;
     }
     

@@ -2,8 +2,8 @@
 <%@page import="Class.User"%>
 <%@ page pageEncoding="UTF-8" %>
 <%
+    request.setCharacterEncoding("UTF-8");
     String errorMsg = "";
-    double avg = 0;
         //verifico se o botao de login foi acionado
         if(request.getParameter("session.login") != null){
             //pegar os dados do form de login e criar objeto user
@@ -17,9 +17,9 @@
                 }
                 else{
                     //realizar login e ir para a página incial
-                    session.setAttribute("user.login", login);
-                    session.setAttribute("user.pass", pass);
-                    avg = user.getAverage();
+                    session.setAttribute("user.login", user.getLogin());
+                    session.setAttribute("user.name", user.getName());
+                    session.setAttribute("user.avg", user.getAverage());
                     response.sendRedirect(request.getRequestURI());
                 }
             }catch(Exception e){
@@ -28,7 +28,7 @@
         }
         else if(request.getParameter("session.logout") != null){
             session.removeAttribute("user.login");
-            session.removeAttribute("user.pass");
+            session.removeAttribute("user.name");
             response.sendRedirect(request.getRequestURI());
         }
 %>
@@ -52,8 +52,8 @@
     }
     else{//exibe um menu de acoes para o usuario
         %>
-        <h1>Hello <%=session.getAttribute("user.login")%>!</h1>
-        <h2>Minha média é <%=avg%></h2>
+        <h1>Hello <%=session.getAttribute("user.name")%>!</h1>
+        <h2>Minha média é <%=session.getAttribute("user.avg")%></h2>
         <a href="quiz.jsp">Realizar quiz</a>
         <form>
             <input type="submit" name="session.logout" value="Sair">
