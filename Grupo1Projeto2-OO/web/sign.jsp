@@ -29,7 +29,7 @@
                     user.addUser(login, name, pass);
                     //faz login
                     session.setAttribute("user.login", login);
-                    session.setAttribute("user.pass", pass);
+                    session.setAttribute("user.name", name);
                     response.sendRedirect("index.jsp");
                 } else {
                     errorMsg += "Login já esta em uso!";
@@ -45,21 +45,31 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Criar conta</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
-    <body>
-        <form method="post">
-            <label>Nome:</label>
-            <input type="text" name="user.name"><br><br>
-            <label>Login:</label>
-            <input type="text" name="user.login"><br><br>
-            <label>Senha:</label>
-            <input type="password" name="user.password"><br><br>
-            <label>Confirme a senha:</label>
-            <input type="password" name="user.re-password"><br><br>
-            <input type="submit" name="sign" value="Registrar-se">
-            <a href="index.jsp">Voltar</a>
-        </form>
+    <body class="bg-dark">
+        <div class="container">
+            <div class="row justify-content-center">
+                <a class="text-light mb-5 mt-2 h1" href="index.jsp">Quiz x Math</a>
+            </div>
+            <div class="row justify-content-center">
+            <h3 class="text-light col-12 text-center">Criar conta</h3>
+            <form method="post" class="form-group text-light col-6">
+                <label class="font-weight-bold">Nome:</label>
+                <input class="form-control bg-dark text-light" type="text" name="user.name">
+                <label class="font-weight-bold">Login:</label>
+                <input class="form-control bg-dark text-light" type="text" name="user.login">
+                <label class="font-weight-bold">Senha:</label>
+                <input class="form-control bg-dark text-light" type="password" name="user.password">
+                <label class="font-weight-bold">Confirme a senha:</label>
+                <input class="form-control bg-dark text-light" type="password" name="user.re-password">
+                <input class="form-control btn btn-secondary font-weight-bold mt-4" type="submit" name="sign" value="Registrar-se">
+                <a class="form-control btn btn-secondary mt-1" href="index.jsp">Voltar</a>
+            </form>
+            </div>
+        </div>
         <%=errorMsg%>
         <%if(Listener.exceptionMessage != null){%>
             <h3 style="color:red"><%= Listener.exceptionMessage %></h3>

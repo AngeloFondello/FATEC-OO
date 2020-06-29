@@ -33,30 +33,29 @@
         }
 %>
 
-<h1>Quiz x Quiz</h1>
-
 <%
     //verifico se já tem uma sessão
     if(session.getAttribute("user.login") == null){//se nao tive exibe form de login
         %>
-            <form action="#" method="post">
-                <label>Login</label>
-                <input type="text" name="user.login">
-                <label>Senha</label>
-                <input type="password" name="user.password">
-                <input type="submit" name="session.login" value="Entrar">
-                <a href="sign.jsp">Criar conta</a>
-        </form>
-        <%=errorMsg%> 
+            <form action="#" method="post" class="form-inline form-group">
+                <label class="text-light h3 mr-1">Login: </label>
+                <input class="form-control mr-1 bg-dark text-light" type="text" name="user.login">
+                <label class="text-light h3 mr-1">Senha:</label>
+                <input class="form-control mr-1 bg-dark text-light" type="password" name="user.password">
+                <input class="form-control btn btn-secondary mr-1 font-weight-bold" type="submit" name="session.login" value="Entrar">
+                <a class="form-control btn btn-secondary" href="sign.jsp">Criar conta</a>
+            </form>      
         <%
     }
     else{//exibe um menu de acoes para o usuario
+        User user = new User(session.getAttribute("user.login").toString().toString(), session.getAttribute("user.name").toString());
         %>
-        <h1>Hello <%=session.getAttribute("user.name")%>!</h1>
-        <h2>Minha média é <%=session.getAttribute("user.avg")%></h2>
-        <a href="quiz.jsp">Realizar quiz</a>
-        <form>
-            <input type="submit" name="session.logout" value="Sair">
+        <form class="form-inline mb-2">
+            
+            <h3 class="text-light mr-1">Olá <%=session.getAttribute("user.name")%>! </h3>
+            <h3 class="text-light mr-1"> Sua média é <%= user.getAverage() %></h3>
+            <a class="btn btn-secondary font-weight-bold mr-1" href="quiz.jsp">Realizar quiz</a>
+            <input class="btn btn-danger" type="submit" name="session.logout" value="Sair">
         </form>
         <%
     }

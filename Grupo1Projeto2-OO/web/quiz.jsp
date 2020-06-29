@@ -52,7 +52,7 @@
         Historic result = new Historic(nota, session.getAttribute("user.login").toString());
         result.addResult();
         session.setAttribute("last.nota", nota);
-        
+        response.sendRedirect("index.jsp");
         
     }
     
@@ -61,11 +61,23 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Quiz</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     </head>
-    <body>
-        <a href="index.jsp">Voltar</a>
-        <form method="post">
+    <body class="bg-dark">
+        <div class="container text-light">
+            <div class="row justify-content-center">
+                <a class="text-light mb-5 mt-2 h1" href="index.jsp">Quiz x Math</a>
+            </div>
+            <div class="row">
+                <a class="btn btn-secondary font-weight-bold col-2" href="index.jsp">Voltar</a>
+            </div>
+        <div class="row justify-content-center">
+            <div class="col-8">
+                
+            
+        <form method="post" class="form-group">
         <%
             Random random = new Random();
             int x = 0;
@@ -76,45 +88,75 @@
                 i++;
                 if(x == 1){
                     %>
-                    <p><%=i%>.) <%=question.getDescription()%></p>
+                    <div class="bg-secondary pr-4">
+                    <p class="text-light font-weight-bold h4 mt-3"><%=i%>.) <%=question.getDescription()%></p>
                     <input type="hidden" name="desc<%=i%>" value="<%=question.getDescription()%>">
-                    <input type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong1()%>">
-                    <label><%=question.getAnswerwrong1()%></label><br>
-                    <input type="radio" name="ans<%=i%>" value="<%=question.getAnswer()%>">
-                    <label><%=question.getAnswer()%></label><br>
-                    <input type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong3()%>">
-                    <label><%=question.getAnswerwrong3()%></label><br>
-                    <input type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong2()%>">
-                    <label><%=question.getAnswerwrong2()%></label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong1()%>">
+                        <label class="form-check-label"><%=question.getAnswerwrong1()%></label><br>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ans<%=i%>" value="<%=question.getAnswer()%>">
+                        <label class="form-check-label"><%=question.getAnswer()%></label><br>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong3()%>">
+                        <label class="form-check-label"><%=question.getAnswerwrong3()%></label><br>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong2()%>">
+                        <label class="form-check-label"><%=question.getAnswerwrong2()%></label><br>
+                    </div>
+                    </div>
                     <%  
                 }
                 else if(x == 2){
                     %>
-                    <p><%=i%>.) <%=question.getDescription()%></p>
+                    <div class="bg-secondary">
+                    <p class="text-light font-weight-bold h4 mt-3"><%=i%>.) <%=question.getDescription()%></p>
                     <input type="hidden" name="desc<%=i%>" value="<%=question.getDescription()%>">
-                    <input type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong2()%>">
-                    <label><%=question.getAnswerwrong2()%></label><br>
-                    <input type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong3()%>">
-                    <label><%=question.getAnswerwrong3()%></label><br>
-                    <input type="radio" name="ans<%=i%>" value="<%=question.getAnswer()%>">
-                    <label><%=question.getAnswer()%></label><br>
-                    <input type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong1()%>">
-                    <label><%=question.getAnswerwrong1()%></label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong2()%>">
+                        <label class="form-check-label"><%=question.getAnswerwrong1()%></label><br>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong1()%>">
+                        <label class="form-check-label"><%=question.getAnswerwrong3()%></label><br>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong2()%>">
+                        <label class="form-check-label"><%=question.getAnswerwrong2()%></label><br>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ans<%=i%>" value="<%=question.getAnswer()%>">
+                        <label class="form-check-label"><%=question.getAnswer()%></label><br>
+                    </div>
+                    </div>
                     <%  
                 }
                 
                 else{
                     %>
-                    <p><%=i%>.) <%=question.getDescription()%></p>
+                    <div class="bg-secondary">
+                    <p class="text-light font-weight-bold h4 mt-3"><%=i%>.) <%=question.getDescription()%></p>
                     <input type="hidden" name="desc<%=i%>" value="<%=question.getDescription()%>">
-                    <input type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong3()%>">
-                    <label><%=question.getAnswerwrong3()%></label><br>
-                    <input type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong2()%>">
-                    <label><%=question.getAnswerwrong2()%></label><br>
-                    <input type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong1()%>">
-                    <label><%=question.getAnswerwrong1()%></label><br>
-                    <input type="radio" name="ans<%=i%>" value="<%=question.getAnswer()%>">
-                    <label><%=question.getAnswer()%></label><br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ans<%=i%>" value="<%=question.getAnswer()%>">
+                        <label class="form-check-label"><%=question.getAnswer()%></label><br>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong1()%>">
+                        <label class="form-check-label"><%=question.getAnswerwrong1()%></label><br>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong3()%>">
+                        <label class="form-check-label"><%=question.getAnswerwrong3()%></label><br>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="ans<%=i%>" value="<%=question.getAnswerwrong2()%>">
+                        <label class="form-check-label"><%=question.getAnswerwrong2()%></label><br>
+                    </div>
+                    </div>
                     <%  
                 }
                 
@@ -122,8 +164,11 @@
             }
         %>
         
-        <input type="submit" name="quiz.answers" value="Enviar respostas">
+        <input class="btn btn-secondary mt-2 font-weight-bold btn-block" type="submit" name="quiz.answers" value="Enviar respostas">
         
         </form>
+        </div>
+        </div>
+        </div>
     </body>
 </html>
